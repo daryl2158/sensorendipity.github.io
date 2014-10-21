@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+   	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+   
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  	<script src="/socket.io/socket.io.js"></script>	
+	<script src="/javascripts/shake.js" type="text/javascript"></script>
+
+	<body>
+		
+		<body onload="restart()">
+	    <h1><center><font face="Charlemagne Std" size="14" color="#ff2e42"> THE SHAKE GAME </font></center></h1>
+        <table1><div><center><font face="Charlemagne Std" size="8" color="#ffd366" letter-spacing="20px" > <text id = "c_number">Score </text></div></table>
+
+        <input type="button" id= "restart" onclick="restart()" value= "Restart" style="visibility:hidden" >
+        <center>
+       <img id = "myImg" >
+       
+       <div id="bottomDiv"><img id = "myImg1"></div>
+        </center>
+
+	</body>
+	
+<body bgcolor="#000000" >
+
+	<style type="text/css">
+
+	bottomDiv { position: absolute; bottom: 0; }
+
+	</style>
+	
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+	
+  	<script src="/socket.io/socket.io.js"></script>	
+	<script src="/javascripts/client.js" type="text/javascript"></script>	
+	<script src="/javascripts/drawing.js" type="text/javascript"></script>
+    <!-- KK - Import the Jave Script file for drawing the routes -->
+
+		  </head>
+   	    <body>
+    	<br><br><br><br><br>
+    	<h1><center><font face="Charlemagne Std" size="10" color="#ff2e42"> SENSOR DOODLE </font></center></h1>
+    	
+		<br><br>
+    	<!--  <button onclick="emitxy()">Click me</button>-->
+	<center><button type="button" onclick="ipFunction()">Add IP</button> </center>
+    	
+		</body>
+	<script>
+			function ipFunction() {
+		    	/*x = document.getElementById("iparea").value;
+		    	url.push(x);
+		    	emitxy();*/
+
+		    	x=prompt("http://10.52.68.107:8765");
+		    	url.push(x);
+		    	console.log(url);
+		    	emitxy();
+			}
+			</script>
+</html>

@@ -9,7 +9,11 @@
     <link rel="shortcut icon" href="logo.png"> 
 
     <title>Sensorendipity</title>
-
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+ 
+     
+    <!-- Carousel --> 
+  <link rel="stylesheet" href="assets/css/jquery.carousel.fullscreen.css" />
     <!-- Bootstrap core CSS -->
     <link href="bootstrap.css" rel="stylesheet">
 
@@ -25,8 +29,24 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-
+ 
   <body>
+    <style type="text/css">
+    .img-responsive{
+      max-width: 100%;
+      max-height: 660px;
+      min-height: 300px;
+    }
+
+    #playstore{
+    text-align: center;
+    margin: auto;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    }
+   
+    </style>
 
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -42,22 +62,13 @@
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#second">About</a></li>
-            <li><a href="#third">Download</a></li>
+            <li><a href="#about">About</a></li>
 
+            <li><a href="#playstore">Download</a></li>
+            <li><a href="submit.html">Projects</a></li>
+            <li><a href="people.html">People</a></li>
             <li><a href="source.html">Source Code</a></li>
-            <li class="dropdown">
-               <a href="" class="dropdown-toggle" data-toggle="dropdown">Experiences <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="index.html#fourth">Projects</a></li>
-                <li><a href="submit.html">Suggest a project</a></li>
-                <!--<li><a href="#">Somethingf else here</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Nav header</li>
-                <li><a href="#">Separated link</a></li>
-                <li><a href="#">One more separated link</a></li>
-              </ul> -->
-            </li>
+             <li><a href="http://sensorendipity.blogspot.com">Blog</a></li>
           </ul>
             <!--<li><a href="#fifth">Contact</a></li>-->
           <ul class="nav navbar-nav navbar-right">
@@ -68,163 +79,118 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
-<section id="first" class="first-section">
+
+
+
+<div id="carousel-example-generic" class="carousel slide carousel-fade" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+      <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+      <div class="item active">
+        <img src="1.jpg" class="img-responsivex">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                <div class="video-container">
-                  <!-- Replace the following code to Youtube -->
-                   <center><iframe src="//www.youtube.com/embed/wIUDHJSQJK0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></center>
-                </div>
-                </div>
-            </div>
+          <div class="carousel-caption">
+          <!--   <h1>Sensorendipity</h1> -->
+            <!-- <p class="lead">Sensorendipity is an open source framework that enables you to access the sensor data from your mobile device in real-time.</p> -->
+       
+          </a>
+          </div>
         </div>
-    </section>
-<section id="second" class="second-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1><br>What is Sensorendipity ?</h1>
-
- <h3><p style="font-family:Helvetica;font-size:17px;">Sensorendipity is an open source framework that enables you to access the sensor data from your mobile device, easily and in real-time. By formatting and enabling access to the sensor data, live on any web-enabled platform, Sensorendipity now empowers you to discover the amazing world of web-enabled mobile device sensing. Use your mobile phone to control your network connected smart-home. Use your smart-watch to monitor your own (and your friends') exercise levels. Use your smart-eyewear to detect your daily routine, or even drive your web-enabled car? Who knows? Use your mobile device everywhere, for anything, in any way you can dream of. Be amazed by your sensors. That's Sensorendipity.   </p><br></h3>
-
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-
-<section id="third" class="third-section">
-    <div class="container">
-
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h2>Sensorendipity</h2>
-        <p>Ready to begin your mobile sensory discovery? Download the app now! </p>
-        
-        <p>
-          <a class="btn btn-lg btn-primary" href="https://play.google.com/store/apps/details?id=com.cutecenter.chenchen.basicsense" role="button">Download »</a>
-        </p>
       </div>
-</section>
-    </div> <!-- /container -->
 
-    <section id="fourth" class="fourth-section">
+      <div class="item">
+        <img src="2.jpg" class="img-responsivex">
         <div class="container">
-
-          <h2><br>Experiences</h2>
-          Getting started with Sensorendipity is really easy. Try out the <a href="sample.html" target="_blank">
-basic</a> HTML sample.
-          <div class="col-md-12">
-    <div class="row">
-        <div class="col-sm-2"><br>
-<br>
-           <p><img src="spider.png" alt="Chivron" height="140px" width="140px">  <br>
-           
-
-             </p>
-        </div>
-        <div class="col-sm-10">
-<br>
-          <b><br>Spider View</b>
-           <br><br> This view enables you to view a perpective from a sensor spider<br><br>
-<a class="btn btn-success" href="Examples/VisualizationToolkit/Spider.html">Demo</button></a>   <a class="btn btn-info" href="https://github.com/sensorendipity/projects/tree/master/spider">View Source</button> </a> <br>
-
-        </div>
-    </div>
-</div>
-
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-sm-2"><br>
-           <img src="gridview.png" alt="Gridview" height="140px" width="140px">  <br>
-          
-
-             </p>
-        </div>
-        <div class="col-sm-10">
-
-          <b><br>Grid View</b>
-           <br> <br>Gride View allows you to visualize all the present sensor values using d3.js in a single page<br> <br> 
-                 
-<a class="btn btn-success" href="Examples/VisualizationToolkit/GridView-Flot.html">Demo</button> </a> <a class="btn btn-info" href="https://github.com/sensorendipity/projects/tree/master/gridview">View Source</button> </a> 
-          
-        </div>
-    </div>
-</div>
-
-
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-sm-2"><br>
-           <img src="Chevron_1.png" alt="Keylogger" height="140px" width="140px">  <br>
-          
-
-             </p>
-        </div>
-        <div class="col-sm-10">
-
-          <b><br>Key Logger</b>
-           <br> <br>Body content <br> <br> 
+          <div class="carousel-caption">
+           <!--  <h1>Sensorendipity</h1> -->
+           <!--  <p class="lead">Create innovative sensor based applications using just HTML5 and JavaScript.</p> -->
          
-<a class="btn btn-info" href="https://github.com/sensorendipity/projects/blob/master/keystroke_generator/keystroke_generator_python.py">View Source(Python)</button> </a> <a class="btn btn-info" href="https://github.com/sensorendipity/projects/tree/master/keystroke_generator/keystroke_generator_java">View Source(Java)</button> </a> 
+          </div>
         </div>
-    </div>
-</div>
+      </div>
+ 
+
+      <div class="item">
+        <img src="3.jpg" class="img-responsivex">
+        <div class="container">
+          <div class="carousel-caption">
+           <!--  <h1>Sensorendipity</h1>  -->
+           <!--  <p class="lead">Use your mobile phone to control your network connected smart-home.</p> -->
             
+                 </a>
+          </div>
+        </div>
+      </div>
+
+
+           
+    </div><!-- End Wrapper for slides -->
   
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-sm-2"><br>
-           <img src="dataslicer.png" alt="Data Slicer" height="140px" width="140px">  <br>
-             </p>
-        </div>
-        <div class="col-sm-10">
-
-          <b><br>Data Slicer</b>
-           <br> <br>DataSlicer gives you the graphical representation of how the sensor value changes in a defined time frame <br><br>
-                 
-<a class="btn btn-success" href="Examples/DataSlicer/index.html">Demo</button> </a>    
-<a class="btn btn-info" href="https://github.com/sensorendipity/projects/tree/master/dataslicer">View Source</button> </a>  <br>
-
-          
-        </div>
+        <!-- Controls -->
+       <!--  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a> -->
     </div>
+  <!--   <hr class="featurette-divider"> -->
+    </div><!-- /.container -->
+
+        <div id="playstore">
+<br><br><br>            <a href="https://play.google.com/store/apps/details?id=com.cutecenter.chenchen.basicsense">
+           <img alt="Android app on Google Play" src="en_generic_rgb_wo_60.png" /> </a>
+        </div>
+
+
+<section id="about" class="about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12"> <br>
+                   <center><img src="sensor.jpg" class="img-responsive" alt="Responsive image"></center>
+                </div>
+               
+            </div>
+        </div>
+    </section>
+<br><br>
+ 
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+<br><br>
+      In this age of the Internet-of-Things, Sensorendipity empowers application creators to rapidly prototype and build innovative sensor-based solutions to problems by enabling easy access and real time visualisation of smartphone sensor readings, With this mobile framework on your phone, you create create a wide variety of applicataions with the help of mobile sensors. 
+<br><br>
+      Sensorendipity does not collect or share personal information, the sensor data is sent directly from the phone to the requesting device without any intermediates. <br><br>
+
+      Be pleasantly surprised by sensors. That’s Sensorendipity.<br><br>
+    
+    </div>
+ 
+
+    <div class="col-md-6"><center><iframe src="//www.youtube.com/embed/wIUDHJSQJK0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></center></div>
+  </div>
 </div>
 
 
-<div class="col-md-12">
-    <div class="row">
-        <div class="col-sm-2"><br>
-           <img src="volumetric.png" alt="Volumetric 3D" height="140px" width="140px">  <br>
-          
 
-             </p>
-        </div>
-        <div class="col-sm-10">
-
-          <b><br>Volumetric 3D</b>
-           <br> <br>Volumetric View allows you to visualize all the present sensor values in a 3D model using d3.js<br><br>
-                 
-<a class="btn btn-success" href="Examples/VisualizationToolkit/Volumetric.html">Demo</button>  </a>  <a class="btn btn-info" href="https://github.com/sensorendipity/projects/tree/master/volumetric">View Source</button> </a> 
-        </div>
-    </div>
-</div>
-
-        </div>
-      </section>
-
-
-
+ 
 
    <section id="fifth" class="fifth-section">
         <div class="navbar navbar-bottom">
         <div class="container">
-<footer>
-          <h2>Contact Us</h2><br>
+<footer><br><br>
+          <h5>Contact Us</h5>
 
-         <p style="font-family:Helvetica;font-size:15px;"> If you’re interested in writing code, developing artwork, documentation or translations; or spreading the word, we’d love for you to get involved.
+         <p style="font-family:Helvetica;font-size:12px;"> If you’re interested in writing code, developing artwork, documentation or translations; or spreading the word, we’d love for you to get involved.
 
           Or any other questions ? 
 <br>
@@ -237,11 +203,18 @@ join</a> our mailing list </p><br>
       </section>
 
       </div>
-
+      <script src="assets/js/bootstrap.min.carousel.support.js"></script>
+<script src="assets/js/jquery.carousel.fullscreen.js"></script>
+<script type="text/javascript">
+  jQuery('.carousel').carousel({
+    interval: 7000
+  })
+</script>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+
     <script src="jquery.js"></script>
     <script src="bootstrap.js"></script>
   
