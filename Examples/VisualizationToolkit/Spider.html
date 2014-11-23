@@ -99,11 +99,11 @@ li #name{
 <body>
 	<div id="settings">
 		<div id="startSettings">
-			<span>SENSOR IP ADDRESS :</span>
-			<input type="text" id="input_ip_address" value="http://192.168.1.128:8765/"></input>
+			<span>Sensor List<br></span>
+			<!-- <input type="text" id="input_ip_address" value="http://192.168.1.128:8765/"></input> -->
 			<button type="button" id="button_connect" onclick="connect()">Connect</button>
 		 	<button type="button" id="button_start" onclick="start()">Start</button>
-		</div>
+		</div><br>
 		<span>Spiderweb:</span>
 		<div id="webOption">
 		 	<button type="button" id="hide_web" onclick="changeWeb()">Hide</button>
@@ -121,5 +121,6 @@ li #name{
 	<script type="text/javascript" src="js/jquery.sortable.js"></script>
 	<script type="text/javascript" src="js/Three/three-r65.js"></script>
 	<script type="text/javascript" src="js/Spider.js"></script>
+	<body onload="connect()">
 </body>
 </html>

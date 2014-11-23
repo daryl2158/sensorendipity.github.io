@@ -74,7 +74,7 @@ button {
 <body>
     <div id="settings">
         <div id="connection">
-            Sensor IP Address : <input type="text" id="input_ip_address" value="http://192.168.1.128:8765/"/>
+            Sensor List <!-- <input type="text" id="input_ip_address" value="http://192.168.1.128:8765/"/> -->
             <button type="button" id="button_connect" onclick="connect()">Connect</button>
         </div>
         <div id="sensorlist">
@@ -89,5 +89,6 @@ button {
     <script src="js/flot/jquery.flot.js" type="text/javascript"></script>
     <script src="js/flot/jquery.flot.time.js"></script>
     <script type="text/javascript" src="js/GridView-Flot.js"></script>
+    <body onload="connect()">
 </body>
 </html>

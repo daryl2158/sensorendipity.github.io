@@ -346,7 +346,8 @@ function update()
 // Get the IP value from the textbox.
 function setIP()
 {
-	DATA_URL = document.getElementById("input_ip_address").value;
+	//DATA_URL = document.getElementById("input_ip_address").value;
+	DATA_URL = prompt("Enter your phone's IP \neg. http://192.168.0.0:8765");
 	console.log(DATA_URL);
 }
 // Get the string from the IP address.
