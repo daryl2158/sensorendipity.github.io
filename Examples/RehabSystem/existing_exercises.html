@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Existing exercises</title>
+<link type= "text/css" rel="stylesheet" href="style.css" />
+<style type="text/css">
+h1{
+  text-align: center;
+}
+
+p{
+  color: white;
+  text-align: center;
+}
+
+  img {
+  position: relative;
+    left: 50px;
+    right: 50px;
+    width: 200px; 
+    height: 250px;
+  }
+
+  td {
+    width: 300px;
+    height: 300px;
+    padding: 10px;
+    margin: 10px auto; 
+    border-radius: 30px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #0000CC;
+    background-color: #0066CC;
+  }
+  }
+
+</style>
+</head>
+<body>
+<h1>EXISTING EXERCISES</h1>
+<br>
+
+<p style="font-size:20px; color: black; position: relative; left: 150px;">Edit</p> <!--there should be a javascript function allowing batch edit of existing exercises, including deletion, rearranging of exercises-->
+
+<a href="patient_do_IQS_front_page.html"><div class="exercisebuttons">
+<img src="isometric quad sets.jpg">
+<p>Isometric quad sets</p>
+</div></a>
+
+<div class="standardbuttons">
+<a href="patient_mode_front_page.html"><p>Home</p></a>
+<a href="home_page_when_app_is_first_opened.html"><p>Logout</p></a>
+</div>
+
+<input type="button" name="ShowAll" value="Show All Exercises" id="ShowAll" onClick="ShowAll"/>
+
+<table text-align="center">
+        <tbody id="table_body">
+
+        </tbody>
+</table>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+
+var Exercisename;
+
+var exercise_id_timestamp;
+
+function addRow(Exercisename, exercise_key){
+    var tbody = document.getElementById("table_body");
+    var row = document.createElement("tr");
+    var data2 = document.createElement("td");
+    data2.appendChild(document.createTextNode(Exercisename));
+    row.appendChild(data2);
+    tbody.appendChild(row);
+
+    row.onclick = function () {
+
+      window.location.href = "exercise_info.html#" + exercise_key;
+    };
+}
+
+$(document).ready(function(){
+          
+                window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+                var request, db; 
+                
+                if(!window.indexedDB)
+                {
+                    console.log("Your Browser does not support IndexedDB");
+                }
+                
+                {
+                    request = window.indexedDB.open("DataDB", 4);
+                    request.onerror = function(event){
+                        console.log("Error opening DB", event);
+                    }
+                    request.onupgradeneeded = function(event){
+                        console.log("Upgrading");
+                        var db = event.target.result;
+                        var objectStore = db.createObjectStore("exercisedata", {
+                            keyPath : "timestamp",
+                        });
+                        console.log(objectStore);
+                    };
+
+                    request.onsuccess  = function(event){
+                        console.log("Success opening DB");
+                        db = event.target.result;
+                    }
+                }
+                 
+       $("#ShowAll").click(function() {
+          var objectStore = db.transaction("exercisedata").objectStore("exercisedata");
+          
+          objectStore.openCursor().onsuccess = function(event) {
+          var cursor = event.target.result;             
+          
+          if (cursor) {
+              
+              console.log(cursor);
+              console.log(Exercisename);
+              addRow(cursor.value.Exercisename, cursor.key);
+              cursor.continue();
+          }
+          
+          };      
+        });
+       //can add a for loop? On click, for every row/exercisename, create a new window (with html and js same as live_feedback page, taking input from set new exercise)
+        
+                
+                })
+
+</script>
+
+</body>
+</html>

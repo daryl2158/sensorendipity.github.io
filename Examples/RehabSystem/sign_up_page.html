@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sign up page</title>
+<link type= "text/css" rel="stylesheet" href="style.css" />
+<style type="text/css">
+body {font-family:verdana;
+font-size:30px;
+}
+</style>
+</head>
+<body>
+<h1>NEW PROFILE</h1>
+
+<form>
+    <div>              
+    </div> 
+    <table cellspacing="5px"; cellpadding="5%"; align="center">
+       <tr>
+              <td  align="right">Name:</td>
+              <td><input type="text" name="name" id="name" /></td>
+       </tr>
+       <tr>
+              <td align="left">Role:</td>
+              <td><input type="radio" name="role" value="patient" id="role">Patient</td>
+              <td><input type="radio" name="role" value="physiotherapist" id="role">Physiotherapist</td>
+       </tr>
+        <td> <input type="button" value="Save" align="center" id="Save" onClick="Save"/>
+      </button>    
+        </td>
+        </tr>
+  </table> 
+</form>
+
+   <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+var name=document.getElementById("name");
+var role=document.getElementById("role");
+
+
+function addRow(timedate, name, role){
+    var tbody = document.getElementById("table_body");
+    var row = document.createElement("tr");
+    var data1 = document.createElement("td");
+    data1.appendChild(document.createTextNode(timedate));
+    var data2 = document.createElement("td");
+    data2.appendChild(document.createTextNode(name));
+    var data3= document.createElement("td")
+    data3.appendChild(document.createTextNode(role));
+    row.appendChild(data1);
+    row.appendChild(data2);
+    row.appendChild(data3);
+    tbody.appendChild(row);
+}
+
+/*function addRow(index, name){
+    var tbody = document.getElementById("table_body");
+    var row = document.createElement("tr");
+    var data1 = document.createElement("td");
+    data1.appendChild(document.createTextNode(index));
+    var data2 = document.createElement("td");
+    data2.appendChild(document.createTextNode(name));
+    row.appendChild(data1);
+    row.appendChild(data2);
+    tbody.appendChild(row);
+}*/
+
+$(document).ready(function(){
+          
+                window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+                var request, db; 
+                
+                if(!window.indexedDB)
+                {
+                    console.log("Your Browser does not support IndexedDB");
+                }
+                else
+                {
+                    request = window.indexedDB.open("DataDB", 2);
+                    request.onerror = function(event){
+                        console.log("Error opening DB", event);
+                    }
+                    request.onupgradeneeded = function(event){
+                        console.log("Upgrading");
+                        var db = event.target.result;
+                        var objectStore = db.createObjectStore("particulars", {
+                keyPath : "timestamp",
+            });
+                        console.log(objectStore);
+                    };
+
+                    request.onsuccess  = function(event){
+                        console.log("Success opening DB");
+                        db = event.target.result;
+                    }
+                }
+                 
+                
+                $("#Save").click(function record(){
+                    var timestamp = new Date().getTime();
+                    var name = document.getElementById("name").value;
+                    var role = document.getElementById("role").value; 
+                    var transaction = db.transaction(["particulars"],"readwrite");
+                    transaction.oncomplete = function(event) {
+                        console.log("Success :)");
+                        $("#result").html("Add : Success");
+                    };
+                    
+                    transaction.onerror = function(event) {
+                        console.log("Error :(");
+                        $("#result").html("Add : Error");
+                    };  
+                    var objectStore = transaction.objectStore("particulars");
+                    objectStore.add({timestamp: timestamp, Name: name, Role: role});
+                })
+        
+        
+        
+        /*$("#ShowAll").click(function() {
+          var table = document.getElementById("table_head");
+          /*var th = document.createElement("th");
+          th.innerHTML = "Key";             
+          var th = document.createElement("th");
+          th.innerHTML = "Count";*/
+          /*addRow("Time/date","Exercise name", "Time of hold", "Angle (lower limit)", "Angle (upper limit)", "Quantity (lower limit)", "Quantity (upper limit)");
+          var objectStore = db.transaction("exercisedata").objectStore("exercisedata");
+          
+          objectStore.openCursor().onsuccess = function(event) {
+          var cursor = event.target.result;             
+          
+          if (cursor) {
+              
+              console.log(cursor);
+              var d = new Date(cursor.key);
+              //var date = new Date(unix_timestamp*1000);
+              var hours = d.getHours();
+              var exerciseName=document.getElementById("exercisename");
+              // minutes part from the timestamp
+              var minutes = d.getMinutes();
+              // seconds part from the timestamp
+              var seconds = d.getSeconds();
+              console.log(cursor.key);
+              addRow(hours + ":" + minutes + ":" + seconds + "  " + d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear(),exerciseName, timeOfHold, angleLowerLimit, angleUpperLimit, quantityLowerLimit, quantityUpperLimit);
+              cursor.continue();
+          }
+          
+          };      
+        });*/
+        
+                
+                })
+
+</script>
+      <br>
+<input type="button" name="ShowAll" value="Show Past record" id="ShowAll"/>
+<table >
+        <thead id="table_head">
+            <tr>
+                
+            </tr>
+        </thead>
+
+        <tbody id="table_body">
+
+        </tbody>
+</table>
+</body>
+</html>

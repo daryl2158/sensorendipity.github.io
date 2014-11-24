@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Isometric quad sets</title>
+<link type= "text/css" rel="stylesheet" href="style.css" />
+<style type="text/css">
+p.tips{
+    color: green;
+    font-size:20px;
+}
+
+img.angles {
+    width: 800px;
+    height:500px;
+    position: absolute;
+    top: 300px;
+}
+
+table,th,td
+{
+border:1px solid black;
+}
+
+</style>
+</head>
+<body>
+
+<h1>ISOMETRIC QUAD SETS</h1>
+<h2> Live feedback: </h2>
+<h3> Time of hold: <text id = "timer_number">0</text> / 3</h3>
+<h2 style="position: absolute; top:10px; left: 10px;">Results</h2>
+<table style="position: absolute; top:70px; left: 10px;">
+        <tbody id="tbody">
+        </tbody>
+</table>
+<input type="button" name="ShowAll" value="Show Past record" id="ShowAll" style="position: absolute; top:150px; left: 10px;"/>
+<table style="position: absolute; top:200px; left: 100px;">
+        <thead id="table_head">
+            <tr>               
+            </tr>
+        </thead>
+
+        <tbody id="table_body">
+        </tbody>
+</table>
+
+<p class="tips" style="position: absolute; right: 50px; top: 200px;"><b><em>Before you start: <br> 1. Look at the model. <br> 2. Straighten your leg. <br> 3. Press "START". <br> 4. Note phone position</em></b></p>
+<img src="phone orientation.jpg" style="position: absolute; right: 50px; top: 350px; height:200px">
+<img id="180" class="angles">
+<img id="175" class="angles">
+<img id="170" class="angles">
+<img id="165" class="angles">
+<img id="160" class="angles">
+<img id="155" class="angles">
+<img id="150" class="angles">
+<img id="haventstart" class="angles">
+
+<div class="standardbuttons">
+<a href="patient_mode_front_page.html"><p>Home</p></a>
+<a href="home_page_when_app_is_first_opened.html"><p>Logout</p></a>
+</div>
+
+<div style="text-align:center;"><button type="button" align="center" id= "begin" onClick="begin()"/> START </button> 
+</div>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+var ipaddress = prompt("ip address eg http://192.168.1.171:8765")
+var rawData = [];
+var countertimer = 1;
+var counterb=0; 
+var wrongcounter=0;
+var counterc=0;
+var angle180=0;
+var angle170=0;
+var angle160=0;
+var angle150=0;
+var angle155=0;
+var angle165=0;
+var angle175=0;
+var total=0;
+var angle;
+var request, db; 
+interval=setInterval(iqs, 200);
+
+
+function record(){
+    var timestamp = new Date().getTime();
+    var transaction = db.transaction(["patientprogress"],"readwrite");
+
+    transaction.oncomplete = function(event) {
+        console.log("Success :)");
+        $("#result").html("Add : Success");
+    };
+
+    transaction.onerror = function(event) {
+        console.log("Error :(");
+        $("#result").html("Add : Error");
+    };  
+
+    var objectStore = transaction.objectStore("patientprogress");
+    if (total==null) objectStore.add({timestamp: timestamp, total: total, counterb: "0", counterc: counterc, angle: angle});
+    else {objectStore.add({timestamp: timestamp, total: total, counterb: counterb, counterc: counterc, angle: angle});}
+
+}
+
+function begin() {
+    interval2=setInterval(timer,1000);
+}
+
+function timer(){
+    document.getElementById("timer_number").innerHTML = countertimer;
+    countertimer++;
+}
+
+
+  function httpGet(theUrl)
+
+{
+    var xmlHttp = null;
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false);
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
+function addRow(timedate, total, counterb, counterc){
+    var tbody = document.getElementById("table_body");
+    var row = document.createElement("tr");
+    var data1 = document.createElement("td");
+    data1.appendChild(document.createTextNode(timedate));
+    var data2 = document.createElement("td");
+    data2.appendChild(document.createTextNode(total));
+    var data3 = document.createElement("td");
+    data3.appendChild(document.createTextNode(counterb));
+    var data4= document.createElement("td")
+    data4.appendChild(document.createTextNode(counterc));
+    row.appendChild(data1);
+    row.appendChild(data2);
+    row.appendChild(data3);
+    row.appendChild(data4);
+    tbody.appendChild(row);
+    console.log("ok")
+}
+
+function iqs() {
+
+  var rawData = JSON.parse(httpGet(ipaddress));
+  
+  for(var m=0;m<rawData.sensors.length; m++) {
+    //180deg
+    if (rawData.sensors[m].type == "accelerometer" && (rawData.sensors[m].values[1]>0 && rawData.sensors[m].values[1]<1.3)) 
+    {
+        document.getElementById("180").src="180.jpg";
+        document.getElementById("175").src=""
+        document.getElementById("170").src=""
+        document.getElementById("165").src=""
+        document.getElementById("160").src=""
+        document.getElementById("155").src=""
+        document.getElementById("150").src=""
+        document.getElementById("haventstart").src="";
+        angle180++
+        angle=180;
+    }
+
+    //175
+    if (rawData.sensors[m].type == "accelerometer" && (rawData.sensors[m].values[1]>1.3 && rawData.sensors[m].values[1]<2)) 
+    {
+        document.getElementById("180").src="";
+        document.getElementById("175").src="175.jpg"
+        document.getElementById("170").src=""
+        document.getElementById("165").src=""
+        document.getElementById("160").src=""
+        document.getElementById("155").src=""
+        document.getElementById("150").src=""
+        document.getElementById("haventstart").src="";
+        angle175++
+        angle=175;
+    }
+
+    //170deg
+    if (rawData.sensors[m].type == "accelerometer" && (rawData.sensors[m].values[1]>2 && rawData.sensors[m].values[1]<2.6))
+    {
+        document.getElementById("180").src="";
+        document.getElementById("175").src=""
+        document.getElementById("170").src="170.jpg"
+        document.getElementById("165").src=""
+        document.getElementById("160").src=""
+        document.getElementById("155").src=""
+        document.getElementById("150").src=""
+        document.getElementById("haventstart").src="";
+        angle170++
+        angle=170;
+   }
+
+   //165
+   if (rawData.sensors[m].type == "accelerometer" && (rawData.sensors[m].values[1]>2.6 && rawData.sensors[m].values[1]<3.3)) 
+    {
+        document.getElementById("180").src="";
+        document.getElementById("175").src=""
+        document.getElementById("170").src=""
+        document.getElementById("165").src="165.jpg"
+        document.getElementById("160").src=""
+        document.getElementById("155").src=""
+        document.getElementById("150").src=""
+        document.getElementById("haventstart").src="";
+        angle165++
+        angle=165;
+    }
+
+   //160deg
+   if (rawData.sensors[m].type == "accelerometer" && (rawData.sensors[m].values[1]>3.3 && rawData.sensors[m].values[1]<3.8))
+    {
+        document.getElementById("180").src="";
+        document.getElementById("175").src=""
+        document.getElementById("170").src=""
+        document.getElementById("165").src=""
+        document.getElementById("160").src="160.jpg"
+        document.getElementById("155").src=""
+        document.getElementById("150").src=""
+        document.getElementById("haventstart").src="";
+        angle160++
+        angle=160;
+   }
+
+   //155
+    if (rawData.sensors[m].type == "accelerometer" && (rawData.sensors[m].values[1]>3.8 && rawData.sensors[m].values[1]<4.3)) 
+    {
+        document.getElementById("180").src="";
+        document.getElementById("175").src=""
+        document.getElementById("170").src=""
+        document.getElementById("165").src=""
+        document.getElementById("160").src=""
+        document.getElementById("155").src="155.jpg"
+        document.getElementById("150").src=""
+        document.getElementById("haventstart").src="";
+        angle155++
+        angle=155;
+    }
+   //150deg
+   else if (rawData.sensors[m].type == "accelerometer" && (rawData.sensors[m].values[1]>4.3 && rawData.sensors[m].values[1]<5))
+    {
+        document.getElementById("180").src="";
+        document.getElementById("175").src=""
+        document.getElementById("170").src=""
+        document.getElementById("165").src=""
+        document.getElementById("160").src=""
+        document.getElementById("155").src=""
+        document.getElementById("150").src="150.jpg"
+        document.getElementById("haventstart").src="";
+        angle150++
+        angle=150;
+   }
+
+   //else doesn't seem to work, so I had to key in the range 
+   else if (rawData.sensors[m].type == "accelerometer" && (rawData.sensors[m].values[1]<0 || rawData.sensors[m].values[1]>5))
+   {
+        document.getElementById("180").src="180.jpg";
+        document.getElementById("175").src=""
+        document.getElementById("170").src=""
+        document.getElementById("165").src=""
+        document.getElementById("160").src=""
+        document.getElementById("155").src=""
+        document.getElementById("150").src=""
+        document.getElementById("haventstart").src="notready.jpg";
+   }
+
+   //stop the counting
+   if (countertimer>3) {
+        clearInterval(interval2);
+        document.getElementById("timer_number").innerHTML = 0;
+        countertimer=1;
+        total ++;
+        console.log("total=" + total);
+        var tbody = document.getElementById("tbody");
+        var result = document.createElement("img");
+        if (angle180>angle175 && angle180>angle170 && angle180>angle165 && angle180>angle160 && angle180>angle155 && angle180>angle150) {
+            result.setAttribute('src', 'sun.jpg');
+            counterb ++;
+            console.log("counterb=" + counterb);
+        }
+        else {
+            result.setAttribute('src', 'moon.jpg');
+            counterc ++;
+            console.log("counterc=" + counterc)
+        }
+        record();
+        tbody.appendChild(result);
+        angle180=0;
+        angle170=0;
+        angle160=0;
+        angle150=0;
+        angle175=0;
+        angle165=0;
+        angle155=0;
+        return;
+    }
+}
+}
+
+$(document).ready(function(){
+
+    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    
+    if(!window.indexedDB)
+        {
+            console.log("Your Browser does not support IndexedDB");
+        }
+    else
+        {
+            request = window.indexedDB.open("DataDB", 4);
+            request.onerror = function(event){
+                console.log("Error opening DB", event);
+            }
+            request.onupgradeneeded = function(event){
+                console.log("Upgrading");
+                var db = event.target.result;
+                var objectStore = db.createObjectStore("patientprogress", {keyPath : "timestamp",});
+                console.log('upgrade: '+objectStore);
+            };
+            request.onsuccess  = function(event){
+                console.log("Success opening DB");
+                db = event.target.result;
+            }
+        }
+
+    $("#ShowAll").click(function() {
+        var table = document.getElementById("table_head");
+        addRow("Key", "Total", "Correctcount", "Wrongcount");
+        var objectStore = db.transaction("patientprogress").objectStore("patientprogress");
+        objectStore.openCursor().onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                console.log("reached cursor");
+                var d = new Date(cursor.key);
+                var hours = d.getHours();
+                var minutes = d.getMinutes();
+                var seconds = d.getSeconds();
+                addRow(hours + ":" + minutes + ":" + seconds + "  " + d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear(),cursor.value.total, cursor.value.counterb, cursor.value.counterc);
+                cursor.continue();
+            }
+        };
+    });
+})
+
+
+</script>
+</body>
+</html>

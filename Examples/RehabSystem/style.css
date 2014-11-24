@@ -1,0 +1,50 @@
+div.standardbuttons {
+position:absolute;
+top: 30px;
+right: 100px;
+width: 100px; 
+border-style:solid;
+border-width: 3px;
+border-color: #FF6600;
+border-radius:10px;
+background-color:#FF9900;
+}
+
+div.homepagebuttons {
+	width: 300px;
+  height: 30px;
+  padding: 10px;
+  margin: 10px auto; 
+  border-radius: 15px;
+  border-style: solid;
+  border-width: 3px;
+  border-color: #0000CC;
+  background-color: #0066CC;
+  display: block;
+}
+
+div.exercisebuttons {
+    width: 300px;
+    height: 300px;
+    padding: 10px;
+    margin: 10px auto; 
+    border-radius: 30px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #0000CC;
+    background-color: #0066CC;
+    clear: both; 
+    display: block;
+  }
+
+  p{
+  	color:white;
+  	text-align: center;
+  }
+
+h1,h2,h3{text-align: center;}
+
+.centeredimg{
+  text-align: center;
+  font-family: "Verdana", Geneva, sans-serif;
+}

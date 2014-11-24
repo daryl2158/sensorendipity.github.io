@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Set new exercise</title>
+<link type= "text/css" rel="stylesheet" href="style.css" />
+<style type="text/css">
+</style>
+</head>
+<body>
+<h1>SET NEW EXERCISE!</h1>
+
+<form>
+    <div>              
+    </div> 
+    <table cellspacing="5px"; cellpadding="5%"; align="center">
+       <tr>
+              <td  align="right">Exercise name:</td>
+              <td><input type="text" name="exercisename" id="exercisename"/></td>
+       </tr>
+       <tr>
+              <td align="right">Time of hold (s):</td>
+              <td><input type="text" name="timeofhold" id="timeofhold"/></td>
+       </tr>
+       <tr>
+       		  <td align="right">Range of angle:</td>
+       		  <td><input type="text" name="anglelowerlimit" id="anglelowerlimit">to</td> 
+       		  <td><input type="text" name="angleupperlimit" id="angleupperlimit">degrees</td>
+          </tr>
+       	<tr>
+       		  <td align="right">Quantity:</td>
+       		  <td><input type="text" name="quantitylowerlimit" id="quantitylowerlimit">sets X</td>
+       		  <td><input type="text" name="quantityupperlimit" id="quantityupperlimit">reps</td>
+            </tr>
+       	<tr>
+        <td> <button type="button" align="center" id= "Save" onClick="Save"/> 
+        Save
+        </button>    
+        </td>
+        </tr>
+	</table> 
+</form>
+<div class="standardbuttons"><!-- use external css sheet-->
+<a href="physiotherapist_mode_front_page.html"><p>Home</p></a>
+<a href="home_page_when_app_is_first_opened.html"><p>Logout</p></a>
+</div>
+   <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+  
+var Exercisename;
+var TimeofHold;
+var angleLowerLimit;
+var angleUpperLimit;
+var quantityLowerLimit;
+var quantityUpperLimit;
+
+
+
+function addRow(timedate, Exercisename, TimeofHold, angleLowerLimit, angleUpperLimit, quantityLowerLimit, quantityUpperLimit){
+    var tbody = document.getElementById("table_body");
+    var row = document.createElement("tr");
+    var data1 = document.createElement("td");
+    data1.appendChild(document.createTextNode(timedate));
+    var data2 = document.createElement("td");
+    data2.appendChild(document.createTextNode(Exercisename));
+    var data3= document.createElement("td")
+    data3.appendChild(document.createTextNode(TimeofHold));
+    var data4= document.createElement("td")
+    data4.appendChild(document.createTextNode(angleLowerLimit));
+    var data5= document.createElement("td")
+    data5.appendChild(document.createTextNode(angleUpperLimit));
+    var data6= document.createElement("td")
+    data6.appendChild(document.createTextNode(quantityLowerLimit));
+    var data7= document.createElement("td")
+    data7.appendChild(document.createTextNode(quantityUpperLimit));
+    row.appendChild(data1);
+    row.appendChild(data2);
+    row.appendChild(data3);
+    row.appendChild(data4);
+    row.appendChild(data5);
+    row.appendChild(data6);
+    row.appendChild(data7);
+    tbody.appendChild(row);
+}
+
+$(document).ready(function(){
+          
+                window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+
+                var request, db; 
+                
+                if(!window.indexedDB)
+                {
+                    console.log("Your Browser does not support IndexedDB");
+                }
+                else
+                {
+                    request = window.indexedDB.open("DataDB", 4);
+                    request.onerror = function(event){
+                        console.log("Error opening DB", event);
+                    }
+                    request.onupgradeneeded = function(event){
+                        console.log("Upgrading");
+                        var db = event.target.result;
+                        var objectStore = db.createObjectStore("exercisedata", {
+                keyPath : "timestamp",
+            });
+                        console.log(objectStore);
+                    };
+
+                    request.onsuccess  = function(event){
+                        console.log("Success opening DB");
+                        db = event.target.result;
+                    }
+                }
+                 
+                
+                $("#Save").click(function record(){
+                    timestamp = new Date().getTime();
+                    Exercisename = document.getElementById("exercisename").value;
+                    TimeofHold = document.getElementById("timeofhold").value; 
+                    angleLowerLimit = document.getElementById("anglelowerlimit").value; 
+                    angleUpperLimit = document.getElementById("angleupperlimit").value; 
+                    quantityLowerLimit = document.getElementById("quantitylowerlimit").value; 
+                    quantityUpperLimit = document.getElementById("quantityupperlimit").value; 
+                    var transaction = db.transaction(["exercisedata"],"readwrite");
+                    transaction.oncomplete = function(event) {
+                        console.log("Success :)");
+                        $("#result").html("Add : Success");
+                    };
+                    
+                    transaction.onerror = function(event) {
+                        console.log("Error :(");
+                        $("#result").html("Add : Error");
+                    };  
+                    var objectStore = transaction.objectStore("exercisedata");
+                   objectStore.add({timestamp: timestamp, Exercisename: Exercisename, TimeofHold: TimeofHold, angleLowerLimit: angleLowerLimit, angleUpperLimit: angleUpperLimit, quantityLowerLimit: quantityLowerLimit, quantityUpperLimit: quantityUpperLimit});
+                })
+        
+        
+        
+        $("#ShowAll").click(function() {
+          var table = document.getElementById("table_head");
+          addRow("Time/date","Exercise name", "Time of hold", "Angle (lower limit)", "Angle (upper limit)", "Quantity (lower limit)", "Quantity (upper limit)");
+          var objectStore = db.transaction("exercisedata").objectStore("exercisedata");
+          
+          objectStore.openCursor().onsuccess = function(event) {
+          var cursor = event.target.result;             
+          
+          if (cursor) {
+              
+              console.log(cursor);
+              var d = new Date(cursor.key);
+              var hours = d.getHours();
+              var minutes = d.getMinutes();
+              var seconds = d.getSeconds();
+              console.log(Exercisename);
+              addRow(hours + ":" + minutes + ":" + seconds + "  " + d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear(),cursor.value.Exercisename, TimeofHold, angleLowerLimit, angleUpperLimit, quantityLowerLimit, quantityUpperLimit);
+              cursor.continue();
+          }
+          
+          };      
+        });
+        
+                
+                })
+
+</script>
+<input type="button" name="ShowAll" value="Show Past record" id="ShowAll"/>
+<table >
+        <thead id="table_head">
+            <tr>
+                
+            </tr>
+        </thead>
+
+        <tbody id="table_body">
+
+        </tbody>
+</table>
+</body>
+</html>

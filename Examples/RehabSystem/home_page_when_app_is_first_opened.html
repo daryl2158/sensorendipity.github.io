@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Physio Tracker</title>
+<link type= "text/css" rel="stylesheet" href="style.css" />
+<style type="text/css">
+body {background-color: white;}
+
+img {
+	position: relative;
+    left: 50px;
+    right: 50px;
+    width: 200px; 
+    height: 250px;
+}
+
+div.profilebuttons {
+    width: 300px;
+    height: 300px;
+    padding: 10px;
+    margin: 10px; 
+    border-radius: 30px;
+    border-style: solid;
+    border-width: 5px;
+    border-color: #0000CC;
+    background-color: #0066CC;
+    display: inline-block;
+}
+</style>
+</head>
+<body>
+
+<h1 style="text-align:center;">Physio Tracker</h1>
+
+<div style="clear: both; display: block;">
+    <h2 style="position: absolute; left: 50px;">Select your profile:</h2>
+    <h2 style="position: absolute; right:150px;">Sign up:</h2>
+
+</div>
+
+<br></br>
+
+<a href="patient_mode_front_page.html"><div class="profilebuttons" style="float:left;">
+<img src= "patient profile pic.gif">
+<p><b> Ali (Patient) </b></p>
+</div></a>
+
+<a href="physiotherapist_mode_front_page.html"><div class="profilebuttons" style="float:left;">
+<img src="physiotherapist profile pic.gif"> 
+<p><b> Ben (Physiotherapist) </b></p>
+</div></a>
+
+<div class="profilebuttons" style="float:right;">
+<a href="sign_up_page.html"><img src="create new profile button.gif">
+<p><b>Create new profile</b></p></a>
+</div>
+<!--buttons should not be so formatted, have to make it such that it's auto-generated from sign-up page-->
+<script type="text/javascript" src="script.js"></script>
+</body>
+</html>

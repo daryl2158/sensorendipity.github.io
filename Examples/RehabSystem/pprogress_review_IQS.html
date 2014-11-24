@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+   <head>
+	<title>Progress review - IQS</title>
+	<link type= "text/css" rel="stylesheet" href="style.css" />
+	<style type="text/css">
+  
+  body {
+    text-align:center;
+  }
+
+  </style>
+   </head>
+
+<body>
+  <h1>PROGRESS REVIEW</h1>
+  <h2>Isometric Quad Sets</h2>
+
+  <input type="button" name="Plot Chart" value="Plot Chart" id="plotchart"/>
+  <div id="placeholder" style="width:1000px;height:400px;"></div>
+
+  <div class="standardbuttons">
+  <a href="patient_mode_front_page.html"><p>Home</p></a>
+  <a href="home_page_when_app_is_first_opened.html"><p>Logout</p></a>
+  <a href="pprogress_review_front_page.html"><p>Progress review</p>
+  </div>
+
+</body>
+
+   <script type="text/javascript" src="jquery.min.js"></script>
+   <script language="javascript" type="text/javascript" src="jquery.flot.min.js"></script>
+   <script language="javascript" type="text/javascript" src="jquery.flot.time.min.js"></script>
+   <script language="javascript" type="text/javascript" src="jquery.flot.axislabels.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function(){              
+
+window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    
+    if(!window.indexedDB)
+        {
+            console.log("Your Browser does not support IndexedDB");
+        }
+    else
+        {
+            request = window.indexedDB.open("DataDB", 4);
+            request.onerror = function(event){
+                console.log("Error opening DB", event);
+            }
+            request.onupgradeneeded = function(event){
+                console.log("Upgrading");
+                var db = event.target.result;
+                var objectStore = db.createObjectStore("patientprogress", {keyPath : "timestamp",});
+                console.log(objectStore);
+            };
+            request.onsuccess  = function(event){
+                console.log("Success opening DB");
+                db = event.target.result;
+            }
+        }
+
+   $("#plotchart").click(function(){
+   	var d1 = [];
+
+   	var objectStore = db.transaction("patientprogress").objectStore("patientprogress"); 
+
+   	var request = objectStore.openCursor();
+   	request.onsuccess = function() {
+
+		var cursor = event.target.result;
+		if(cursor) {
+	   		//d1.push([cursor.value["angleArray"]]);
+        d1.push([cursor.key, cursor.value.angle]);
+        console.log(cursor.value.angle);
+	   		cursor.continue();
+		}
+		
+	    $.plot($("#placeholder"), 
+	      [{
+		   label: "EX_Plot",
+		   data: d1,
+		   lines: {
+				show: true, fill: false
+		   },
+		   points: {
+				show: true,
+				fillColor: '#FF0000'
+		   },
+		   color: "#0000FF"	//"#478514" Green
+		}],
+		{ 
+		 xaxis: { 
+				mode: "time",
+        timeformat: "%d/%m/%y %h:%m:%s",
+				timezone: "browser",
+				axisLabel: "Time",
+				axisLabelFontSizePixels: 40 
+		}, 
+		 yaxes: [{ 
+				max: 190,
+				axisLabel: "Angle",
+				axisLabelUseCanvas: true,
+				axisLabelFontSizePixels: 24,
+				axisLabelPadding: 5
+		}]
+	    });
+
+	}
+   })
+})
+
+</script>
+</html>

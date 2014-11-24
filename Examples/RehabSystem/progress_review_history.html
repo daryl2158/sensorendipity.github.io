@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Progress review - History</title>
+<link type= "text/css" rel="stylesheet" href="style.css" />
+<style type="text/css">
+table,th,td
+{
+border:1px solid black;
+}
+</style>
+</head>
+<body>
+<h1>PROGRESS REVIEW</h1>
+<h2>History</h2>
+
+<div style="text-align: center;"><input type="button" name="ShowAll" value="Show Past record" id="ShowAll"/>
+<table width="800px" align="center">
+        <thead id="table_head">
+            <tr>               
+            </tr>
+        </thead>
+
+        <tbody id="table_body">
+        </tbody>
+</table></div>
+
+<div class="standardbuttons">
+<a href="physiotherapist_mode_front_page.html"><p>Home</p></a>
+<a href="home_page_when_app_is_first_opened.html"><p>Logout</p></a>
+<a href="progress_review_front_page.html"><p>Progress review</p>
+</div>
+
+</body>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript">
+
+var counterb;
+var counterc;
+var total;
+var request, db; 
+
+function addRow(timedate, total, counterb, counterc){
+    var tbody = document.getElementById("table_body");
+    var row = document.createElement("tr");
+    var data1 = document.createElement("td");
+    data1.appendChild(document.createTextNode(timedate));
+    var data2 = document.createElement("td");
+    data2.appendChild(document.createTextNode(total));
+    var data3 = document.createElement("td");
+    data3.appendChild(document.createTextNode(counterb));
+    var data4= document.createElement("td")
+    data4.appendChild(document.createTextNode(counterc));
+    row.appendChild(data1);
+    row.appendChild(data2);
+    row.appendChild(data3);
+    row.appendChild(data4);
+    tbody.appendChild(row);
+    console.log("ok")
+}
+
+$(document).ready(function(){
+
+    window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+    
+    if(!window.indexedDB)
+        {
+            console.log("Your Browser does not support IndexedDB");
+        }
+    else
+        {
+            request = window.indexedDB.open("DataDB", 2);
+            request.onerror = function(event){
+                console.log("Error opening DB", event);
+            }
+            request.onupgradeneeded = function(event){
+                console.log("Upgrading");
+                var db = event.target.result;
+                var objectStore = db.createObjectStore("patientprogress", {keyPath : "timestamp",});
+                console.log(objectStore);
+            };
+            request.onsuccess  = function(event){
+                console.log("Success opening DB");
+                db = event.target.result;
+            }
+        }
+
+    $("#ShowAll").click(function() {
+        var table = document.getElementById("table_head");
+        addRow("Date", "Total number of exercises", "Number of correct exercises", "Number of wrong exercises");
+        var objectStore = db.transaction("patientprogress").objectStore("patientprogress");
+        objectStore.openCursor().onsuccess = function(event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                console.log("reached cursor");
+                var d = new Date(cursor.key);
+                addRow(d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear(),cursor.value.total, cursor.value.counterb, cursor.value.counterc);
+                cursor.continue(); //TROUBLE! How to make the total as of everyday, and not every set?
+            }
+        };
+    });
+})
+
+
+</script>
+</html>
