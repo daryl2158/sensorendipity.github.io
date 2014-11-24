@@ -5,9 +5,9 @@
 <body>
 
 	<script type="text/javascript">
-	ipaddress=prompt("Enter your IP \neg. 192.168.0.0:8765") 
+	ipaddress=prompt("Enter your IP \neg. 192.168.0.0:8765","http://") 
 	//parse JSON string
-	var data = JSON.parse(httpGet("http://"+ipaddress));
+	var data = JSON.parse(httpGet(ipaddress));
 	//create an httpGet request
 	function httpGet(theUrl) 
 	{ 
