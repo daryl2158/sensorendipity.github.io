@@ -87,7 +87,7 @@ function connect()
 function setIP()
 {
    // DATA_URL = document.getElementById("input_ip_address").value;
-   DATA_URL = prompt("Enter your phone's IP \neg. http://192.168.0.0:8765");
+   DATA_URL = prompt("Enter your phone's IP \neg. http://192.168.0.0:8765","http://");
 }
 
 // Get the string from the IP address.
